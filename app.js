@@ -21,8 +21,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, "public")));
 
-// using app routes
-app.use(authRoutes);
+
 
 // session
 app.use(
@@ -32,6 +31,8 @@ app.use(
         saveUninitialized: false
     })
 );
+// using app routes
+app.use(authRoutes);
 
 // viewengine setup
 app.set("view engine", "ejs");
