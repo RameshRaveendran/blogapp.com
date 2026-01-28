@@ -8,6 +8,7 @@ const path = require('path');
 
 // local requires
 const connectDB = require('./config/db');
+const authRoutes = require('./routes/auth');
 
 // app
 const app = express();
@@ -16,8 +17,12 @@ const app = express();
 connectDB();
 
 // middleware
+app.use(express.json())
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, "public")));
+
+// using app routes
+app.use(authRoutes);
 
 // session
 app.use(
@@ -31,6 +36,8 @@ app.use(
 // viewengine setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+
 
 // routes
 app.get("/",(req , res) => {
