@@ -9,6 +9,7 @@ const path = require('path');
 // local requires
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
+const requireLogin = require('./middleware/auth');
 
 // app
 const app = express();
@@ -41,9 +42,26 @@ app.set("views", path.join(__dirname, "views"));
 
 
 // routes
-app.get("/",(req , res) => {
-    res.send('Blog app Running');
+// app.get("/",(req , res) => {
+//     res.send('Blog app Running');
+// });
+
+// protected route Check
+app.get("/protected",requireLogin , (req, res) => {
+    res.json({
+        success:true,
+        message: "You are authenticated",
+        userId: req.session.userId
+    });
 });
+// //dddddddddddddddddeeeeeeeeeeeeeeeeebbbbbbbbbbbbbbuuuuuuuuuuuuggggggg
+// app.get("/debug-session", (req, res) => {
+//   res.json({
+//     hasSession: !!req.session,
+//     userId: req.session.userId || null
+//   });
+// });
+
 
 // vercel exportation
 module.exports = app;

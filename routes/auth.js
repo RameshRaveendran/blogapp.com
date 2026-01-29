@@ -93,6 +93,8 @@ router.post("/login", async (req , res) => {
         }
         // if its all success create a session for the login
         req.session.userId = user._id;
+        console.log("SESSION AFTER LOGIN:", req.session);
+
     
         return res.status(200).json({
             success: true,
@@ -107,7 +109,27 @@ router.post("/login", async (req , res) => {
         });
     }
 
-})
+});
+// logout route handler
+router.post('/logout', (req , res) => {
+    // distroyer
+    req.session.destroy(err => {
+        if(err) {
+            return res.status(500).json({
+                success: false,
+                message:"Logout failed"
+            });
+        }
+        // else case clearCookie
+        res.clearCookie("connect.sid");
+    
+        return res.status(200).json({
+            success: true,
+            message:"Logout successfully"
+        });
+    });
+
+});
 
 
 
