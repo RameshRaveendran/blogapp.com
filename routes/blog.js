@@ -95,6 +95,54 @@ router.get("/blogs/:id", async (req , res ) => {
         });
     }
 });
+// update blog 
+router.put("/blogs/:id", requireLogin, async (req, res) => {
+    const { id } = req.params;
+    const { title , content} = req.body;
+
+    // validate ObjectId
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({
+            success:false,
+            message:"Invalid blog id"
+        });
+    }
+    try {
+        const blog = await Blog.findById(id);
+
+        if(!blog){
+            return res.status(404).json({
+                success: false,
+                message:"Blog not found"
+            });
+        }
+        // ownership Check
+        if(blog.author.toString() !== req.session.userId) {
+            return res.status(403).json({
+                success: false,
+                message: "You are not allowed to edit this blog"
+            });
+        }
+        // update field
+        if(title) blog.title = title;
+        if(content) blog.content = content;
+
+        await blog.save();
+
+        // success note
+        return res.status(200).json({
+            success: true,
+            message: "Blog updated Successfully"
+        });
+
+    } catch (error) {
+        console.error("Update blog error:" , error);
+        return res.status(500).json({
+            success: false,
+            message:"Internal server error"
+        });
+    }
+});
 
 
 
