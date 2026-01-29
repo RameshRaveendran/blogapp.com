@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const Blog = require('../models/Blog');
 const requireLogin = require('../middleware/auth');
 
@@ -58,7 +59,42 @@ router.get("/blogs", async (req, res ) => {
             message: "Internal server error"
         });
     }
-})
+});
+// single blog route
+router.get("/blogs/:id", async (req , res ) => {
+    const { id } = req.params;
+    // check valid ObjectId
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(400).json({
+            success: false,
+            message: "Invalid blog id"
+        });
+    }
+
+    try {
+        const blog = await Blog.findById(id)
+        .populate("author", "email");
+        console.log(blog)
+
+        if(!blog){
+            return res.status(404).json({
+                success: false,
+                message: "Blog not found"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            blog
+        });
+    } catch (error) {
+        console.error( "Fetch blog error:" ,error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+});
 
 
 
