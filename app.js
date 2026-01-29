@@ -10,6 +10,7 @@ const path = require('path');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
 const requireLogin = require('./middleware/auth');
+const blogRoutes = require('./routes/blog');
 
 // app
 const app = express();
@@ -17,7 +18,7 @@ const app = express();
 // database Connection
 connectDB();
 
-// middleware
+// middleware body parsers
 app.use(express.json())
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, "public")));
@@ -34,6 +35,7 @@ app.use(
 );
 // using app routes
 app.use(authRoutes);
+app.use(blogRoutes);
 
 // viewengine setup
 app.set("view engine", "ejs");
