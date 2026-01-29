@@ -40,5 +40,27 @@ router.post('/blogs',requireLogin, async (req , res ) => {
 
     }
 });
+// read all blogs route
+router.get("/blogs", async (req, res ) => {
+    try {
+        const blogs = await Blog.find()
+        .populate("author","email")
+        .sort({ createdAt: -1});
+
+        return res.status(200).json({
+            success: true,
+            blogs
+        });
+    } catch (error) {
+        console.error("Fetch blogs error:" , error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+})
+
+
+
 
 module.exports = router;
