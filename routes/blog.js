@@ -143,7 +143,52 @@ router.put("/blogs/:id", requireLogin, async (req, res) => {
         });
     }
 });
+// delete blog
+router.delete("/blogs/:id", requireLogin, async (req , res) => {
+    const { id } = req.params;
 
+    // validate ObjectId
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(400).json({
+            success: false,
+            message: "Invalid blog id"
+        });
+    }
+    try {
+        // find blog
+        const blog = await Blog.findById(id);
+
+        if(!blog){
+            return res.status(404).json({
+                success: false,
+                message: "Blog is not found"
+            });
+        }
+        // ownership check 
+        if(blog.author.toString() !== req.session.userId){
+            return res.status(403).json({
+                success: false,
+                message: "You are not allowed to delete this blog"
+            });
+        }
+        // if all of them false then delete the Blog
+        await blog.deleteOne();
+
+        // return success
+        return res.status(200).json({
+            success: true,
+            message: " Blog deleted successfully"
+        });
+
+    } catch (error) {
+        
+        console.error("Delete blog error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+});
 
 
 
