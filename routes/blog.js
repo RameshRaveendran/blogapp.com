@@ -5,6 +5,19 @@ const requireLogin = require('../middleware/auth');
 
 const router = express.Router();
 
+
+
+router.get("/", async (req , res) => {
+    const blogs = await Blog.find()
+        .populate("author", "email")
+        .sort({ createdAt: -1});
+
+    res.render("blogs", {
+        blogs,
+        userId: req.session.userId
+    });
+});
+
 // Blog creating space
 router.post('/blogs',requireLogin, async (req , res ) => {
     console.log("SESSION IN BLOG ROUTE:", req.session);

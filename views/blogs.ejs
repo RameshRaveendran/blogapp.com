@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --header-bg: #111827;     /* Very dark charcoal/black */
+            --header-text: #f9fafb;
+            --body-bg: #f3f4f6;       /* Light gray background for contrast */
+            --card-bg: #ffffff;
+            --text-main: #374151;
+            --text-title: #111827;
+            --accent: #2563eb;        /* Subtle blue for links */
+            --border: #e5e7eb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--body-bg);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, .brand {
+            font-family: 'Playfair Display', serif; /* Classy Serif Font */
+            color: var(--text-title);
+        }
+
+        /* --- DARK HEADER --- */
+        .navbar {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1100px; /* Wider layout as requested */
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 1.8rem;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            padding: 0.6rem 1.4rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        /* "Register/Create" Button - White on Dark */
+        .btn-primary {
+            /* background-color: #141313; */
+            color: white;
+            border: 1px solid white;
+        }
+        .btn-primary:hover {
+            border-color: #080808;
+        }
+
+        /* "Login/Logout" Button - Transparent border */
+        .btn-outline {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid white;
+        }
+        .btn-outline:hover {
+            border-color: #080808;
+        }
+
+        /* --- MAIN CONTENT --- */
+        main {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--text-title);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* --- BLOG CARDS --- */
+        .grid-layout {
+            display: grid;
+            /* Creates a grid that auto-fits. Wider screens see 2 cols, narrow see 1 */
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); 
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 2px; /* Sharper corners are often classier */
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-color: #d1d5db;
+        }
+
+        .blog-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .blog-meta {
+            font-size: 0.85rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 1rem;
+        }
+
+        .blog-content {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Cuts off text after 3 lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .read-more {
+            margin-top: auto;
+            color: var(--text-title);
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 2px solid var(--text-title);
+            align-self: flex-start;
+            padding-bottom: 2px;
+        }
+
+        form.inline { display: inline; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="brand">BLOGGY.COM</a>
+            
+            <div class="nav-links">
+                <% if (userId) { %>
+                    <a href="/blogs/new" class="btn btn-primary">Write Article</a>
+                    <form action="/logout" method="POST" class="inline">
+                        <button class="btn btn-outline">Log Out</button>
+                    </form>
+                <% } else { %>
+                    <a href="/login" class="btn btn-outline">Sign In</a>
+                    <a href="/register" class="btn btn-primary">Register</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1 class="section-title">LATEST STORIES</h1>
+
+        <div class="grid-layout">
+            <% if (blogs.length > 0) { %>
+                <% blogs.forEach(blog => { %>
+                    <article class="blog-card">
+                        <h2 class="blog-title"><%= blog.title %></h2>
+                        <div class="blog-meta">
+                            By <%= blog.author.email %>
+                        </div>
+                        <p class="blog-content"><%= blog.content %></p>
+                        <a href="#" class="read-more">Read Full Story</a>
+                    </article>
+                <% }) %>
+            <% } else { %>
+                <div style="grid-column: 1 / -1; text-align: center; padding: 4rem;">
+                    <h3>No stories yet.</h3>
+                    <p>Be the first to publish on our platform.</p>
+                </div>
+            <% } %>
+        </div>
+    </main>
+
+</body>
+</html>
