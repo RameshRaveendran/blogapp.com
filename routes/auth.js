@@ -7,22 +7,27 @@ const router = express.Router();
 // register get route
 router.get("/register", (req , res) => {
     res.render("register")
-})
+});
+// login get route
+router.get("/login",(req , res) => {
+    res.render("login");
+});
+
 
 // register route setup
 router.post("/register", async (req , res) => {
     const {email , password} = req.body;
 
     // validate the input early
-        if(!email || !password){
-            return res.status(400).json({
+    if(!email || !password){
+        return res.status(400).json({
                 success: false,
                 message: "Email and password are required"
             });
         }
     try {
 
-
+        
         // if user is find check existing user or not 
         const existingUser = await User.findOne({email});
 

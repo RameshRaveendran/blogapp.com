@@ -6,7 +6,7 @@ const requireLogin = require('../middleware/auth');
 const router = express.Router();
 
 
-
+// home route
 router.get("/", async (req , res) => {
     const blogs = await Blog.find()
         .populate("author", "email")
@@ -17,6 +17,12 @@ router.get("/", async (req , res) => {
         userId: req.session.userId
     });
 });
+
+// creating blog route
+router.get("/blogs/new", requireLogin , (req, res) => {
+    res.render('create-blog')
+});
+
 
 // Blog creating space
 router.post('/blogs',requireLogin, async (req , res ) => {
@@ -38,11 +44,7 @@ router.post('/blogs',requireLogin, async (req , res ) => {
         });
         await  blog.save();
 
-        return res.status(201).json({
-            success:true,
-            message:"Blog created successfully",
-            blogId: blog._id
-        });
+        res.redirect('/')
 
 
     } catch (error) {

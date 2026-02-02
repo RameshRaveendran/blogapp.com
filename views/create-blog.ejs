@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Blog | Bloggy</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(
+        135deg,
+        #f5f6f8,
+        #e9ecf1
+      );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 0;
+    }
+
+    .editor-container {
+      width: 750px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+      padding: 40px;
+    }
+
+    .editor-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .editor-header h2 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .editor-header p {
+      font-size: 14px;
+      color: #777;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 15px;
+      background: #fafafa;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #6c63ff;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 200px;
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .create-btn {
+      padding: 14px 32px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #6c63ff, #5a54d1);
+      color: #fff;
+      font-size: 15px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(108, 99, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .create-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(108, 99, 255, 0.5);
+    }
+
+    .back-link {
+      text-decoration: none;
+      color: #666;
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #6c63ff;
+    }
+
+    .writing-tip {
+      margin-top: 35px;
+      padding: 15px 20px;
+      background: #f6f7ff;
+      border-left: 4px solid #6c63ff;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="editor-container">
+
+    <div class="editor-header">
+      <h2>Write a New Blog ✍️</h2>
+      <p>Share your ideas, stories, and experiences</p>
+    </div>
+
+    <form action="/blogs" method="POST">
+
+      <div class="form-group">
+        <input
+          type="text"
+          name="title"
+          placeholder="Blog title"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <textarea
+          name="content"
+          placeholder="Start writing your story here..."
+          required
+        ></textarea>
+      </div>
+
+      <div class="actions">
+        <a href="/" class="back-link">← Back to blogs</a>
+        <button type="submit" class="create-btn">Publish Blog</button>
+      </div>
+
+    </form>
+
+    <div class="writing-tip">
+      💡 Tip: Write like you're talking to one person, not a crowd.
+    </div>
+
+  </div>
+
+</body>
+</html>
