@@ -4,6 +4,10 @@ const User = require('../models/User');
 
 const router = express.Router();
 
+// register get route
+router.get("/register", (req , res) => {
+    res.render("register")
+})
 
 // register route setup
 router.post("/register", async (req , res) => {
