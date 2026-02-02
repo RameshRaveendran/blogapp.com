@@ -105,10 +105,11 @@ router.post("/login", async (req , res) => {
         console.log("SESSION AFTER LOGIN:", req.session);
 
     
-        return res.status(200).json({
-            success: true,
-            message: 'Login successful'
-        });
+        // return res.status(200).json({
+        //     success: true,
+        //     message: 'Login successful'
+        // });
+        res.redirect('/')
 
     } catch (error) {
         console.error(error);
