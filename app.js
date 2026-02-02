@@ -6,6 +6,8 @@ const express = require ('express');
 const session = require('express-session');
 const path = require('path');
 const methodOverride = require("method-override");
+const MongoStore = require('connect-mongo').default;
+
 
 
 
@@ -30,13 +32,36 @@ app.use(methodOverride("_method"));
 
 
 // session
+// app.use(
+//     session({
+//         secret:process.env.SESSION_SECRET,
+//         resave: false,
+//         saveUninitialized: false
+//     })
+// );
+
+
 app.use(
-    session({
-        secret:process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false
-    })
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+
+    // ✅ CORRECT
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI
+    }),
+
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax"
+    }
+  })
 );
+
+
+
+
 // using app routes
 app.use(authRoutes);
 app.use(blogRoutes);
