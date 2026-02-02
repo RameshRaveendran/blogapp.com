@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Blog | Bloggy</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --text-main: #374151;
+      --text-title: #111827;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Lato', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 0;
+      color: var(--text-main);
+    }
+
+    .editor-wrapper {
+      width: 800px;
+      background: var(--card-bg);
+      border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+      padding: 45px;
+    }
+
+    .editor-header {
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+    }
+
+    .editor-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      color: var(--text-title);
+      margin-bottom: 8px;
+    }
+
+    .editor-header p {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      color: #6b7280;
+      text-transform: uppercase;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 15px;
+      background: #fafafa;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .form-group textarea {
+      min-height: 260px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .editor-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 35px;
+    }
+
+    .back-link {
+      text-decoration: none;
+      color: #6b7280;
+      font-size: 14px;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+    }
+
+    .update-btn {
+      padding: 14px 36px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      font-size: 15px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .update-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(37, 99, 235, 0.5);
+    }
+
+    .edit-tip {
+      margin-top: 30px;
+      padding: 14px 20px;
+      background: #f8fafc;
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      font-size: 14px;
+      color: #4b5563;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="editor-wrapper">
+
+    <div class="editor-header">
+      <h2>Edit Your Story ✍️</h2>
+      <p>Refine your words before sharing them with the world</p>
+    </div>
+
+    <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
+
+      <div class="form-group">
+        <label>Blog Title</label>
+        <input
+          type="text"
+          name="title"
+          value="<%= blog.title %>"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Blog Content</label>
+        <textarea
+          name="content"
+          required
+        ><%= blog.content %></textarea>
+      </div>
+
+      <div class="editor-actions">
+        <a href="/" class="back-link">← Back to blogs</a>
+        <button type="submit" class="update-btn">Update Blog</button>
+      </div>
+
+    </form>
+
+    <div class="edit-tip">
+      💡 Tip: Read your blog once from top to bottom before updating — small edits make big impact.
+    </div>
+
+  </div>
+
+</body>
+</html>

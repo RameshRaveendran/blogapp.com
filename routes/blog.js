@@ -15,6 +15,7 @@ router.get("/", async (req , res) => {
     res.render("blogs", {
         blogs,
         userId: req.session.userId
+        
     });
 });
 
@@ -22,6 +23,22 @@ router.get("/", async (req , res) => {
 router.get("/blogs/new", requireLogin , (req, res) => {
     res.render('create-blog')
 });
+
+// show edit page
+router.get("/blogs/:id/edit", requireLogin, async (req, res) => {
+  const blog = await Blog.findById(req.params.id);
+
+  if (!blog) {
+    return res.status(404).send("Blog not found");
+  }
+
+  if (blog.author.toString() !== req.session.userId) {
+    return res.status(403).send("Not allowed");
+  }
+
+  res.render("edit-blog", { blog });
+});
+
 
 
 // Blog creating space

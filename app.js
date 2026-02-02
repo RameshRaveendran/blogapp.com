@@ -5,6 +5,10 @@ require("dotenv").config();
 const express = require ('express');
 const session = require('express-session');
 const path = require('path');
+const methodOverride = require("method-override");
+
+
+
 
 // local requires
 const connectDB = require('./config/db');
@@ -22,7 +26,7 @@ connectDB();
 app.use(express.json())
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(methodOverride("_method"));
 
 
 // session
